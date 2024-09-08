@@ -14,7 +14,11 @@ class ControladorUsuario{
          if($resultado["login_usuario"]==$usuario && $resultado["password"]==$password && 
          $resultado["estado"]==1){
             
-            echo "acceso correcto";
+        echo '<script>
+
+        window.location="inicio";
+        
+        </script>';
 
          }
         }
