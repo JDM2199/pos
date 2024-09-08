@@ -25,9 +25,9 @@
     <img src="assest/dist/img/logo_login.png" alt="" width="200">
   </div>
 
-      <form action="../../index3.html" method="post">
+      <form action="" method="post">
         <div class="input-group mb-3">
-          <input type="text" class="form-control" placeholder="Usuario">
+          <input type="text" class="form-control" placeholder="Usuario" name="usuario">
           <div class="input-group-append">
             <div class="input-group-text">
               <span class="fas fa-user"></span>
@@ -35,7 +35,7 @@
           </div>
         </div>
         <div class="input-group mb-3">
-          <input type="password" class="form-control" placeholder="Password">
+          <input type="password" class="form-control" placeholder="Password" name="password">
           <div class="input-group-append">
             <div class="input-group-text">
               <span class="fas fa-lock"></span>
@@ -52,6 +52,14 @@
           </div>
           <!-- /.col -->
         </div>
+
+        <?php
+
+        $login=new ControladorUsuario();
+        $login->ctrIngresoUsuario();
+
+        ?>
+
       </form>
 
      
