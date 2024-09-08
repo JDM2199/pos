@@ -9,8 +9,10 @@
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
   <!-- Font Awesome -->
   <link rel="stylesheet" href="assest/plugins/fontawesome-free/css/all.min.css">
-  <!-- icheck bootstrap -->
-  <link rel="stylesheet" href="assest/plugins/icheck-bootstrap/icheck-bootstrap.min.css">
+   <!-- DataTables -->
+   <link rel="stylesheet" href="assest/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
+  <link rel="stylesheet" href="assest/plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
+  <link rel="stylesheet" href="assest/plugins/datatables-buttons/css/buttons.bootstrap4.min.css">
   <!-- Theme style -->
   <link rel="stylesheet" href="assest/dist/css/adminlte.min.css">
   <link rel="icon" href="assest/dist/img/logo_POS.png">
@@ -20,9 +22,13 @@
 
 if(isset($_GET["ruta"])){
 
-  if($_GET["ruta"]=="inicio"){
+  if($_GET["ruta"]=="inicio"||
+    $_GET["ruta"]=="VUsuario"){
+    include "asideMenu.php";
 
     include $_GET["ruta"].".php";
+
+    include "footer.php";
 
   }
 }else{

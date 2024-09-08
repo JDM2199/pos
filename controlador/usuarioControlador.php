@@ -11,17 +11,22 @@ class ControladorUsuario{
 
          $resultado=ModeloUsuario::mdlAccesoUsuario($usuario);
 
-         if($resultado["login_usuario"]==$usuario && $resultado["password"]==$password && 
-         $resultado["estado"]==1){
+         if($resultado["login_usuario"]==$usuario && $resultado["password"]==$password && $resultado["estado"]==1){
             
-        echo '<script>
+            echo '<script>
+            
+            window.location="inicio";
 
-        window.location="inicio";
-        
-        </script>';
+
+            </script>';
 
          }
         }
     
+    }
+    
+    static public function ctrInfoUsuarios(){
+        $respuesta=ModeloUsuario::mdlInfoUsuarios();
+        return $respuesta;
     }
 }
