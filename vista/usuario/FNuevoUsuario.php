@@ -6,22 +6,22 @@
         </button>
     </div>
     <div class="modal-body">
-        <div class="from-group">
+        <div class="form-group">
             <label for="">Login Usuario</label>
             <input type="text" class="form-control" name="login" id="login" >
         </div>
-        <div class="from-group">
+        <div class="form-group">
             <label for="">Password</label>
-            <input type="text" class="form-control" name="password" id="password" >
+            <input type="password" class="form-control" name="password" id="password" >
         </div>
-        <div class="from-group">
+        <div class="form-group">
             <label for="">Repetir password</label>
-            <input type="text" class="form-control" name="vrPassword" id="vrPassword">
+            <input type="password" class="form-control" name="vrPassword" id="vrPassword">
         </div>
     </div>
     <div class="modal-footer justify-content-between">
         <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
-        <button type="button" class="btn btn-primary">Guardar</button>
+        <button type="submit" class="btn btn-primary">Guardar</button>
     </div>
 </form>
 
@@ -29,34 +29,26 @@
     $(function() {
         $.validator.setDefaults({
             submitHandler: function() {
-                RegUsuario()
+                regUsuario()
             }
         });
+        
         $('#FRegUsuario').validate({
             rules: {
-                email: {
+                login: {
                     required: true,
-                    email: true,
+                    minlength: 3,
                 },
                 password: {
                     required: true,
-                    minlength: 5
+                    minlength: 3
                 },
-                terms: {
-                    required: true
+                vrPassword: {
+                    required: true,
+                    minlength: 3
                 },
             },
-            messages: {
-                email: {
-                    required: "Please enter a email address",
-                    email: "Please enter a valid email address"
-                },
-                password: {
-                    required: "Please provide a password",
-                    minlength: "Your password must be at least 5 characters long"
-                },
-                terms: "Please accept our terms"
-            },
+           
             errorElement: 'span',
             errorPlacement: function(error, element) {
                 error.addClass('invalid-feedback');
