@@ -6,11 +6,7 @@
     Un sistema de punto de venta
   </div>
   <!-- Default to the left -->
-<<<<<<< HEAD
   <strong>Copyright &copy; 2024 <a href="https://ekesoft.net">VENTAS UAJMS</a>.</strong> Derechos reservados
-=======
-  <strong>Copyright &copy; 2024 <a href="https://ekesoft.net">UAJMS </a>.</strong> Derechos reservados
->>>>>>> 68c3592ec3b39b6d86085b0a2d5e315d976fa59d
 </footer>
 </div>
 <!-- ./wrapper -->
