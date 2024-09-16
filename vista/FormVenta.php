@@ -140,6 +140,7 @@
                         <label for="">Cod. de producto</label>
                         <div class="input-group form-group">
                             <input type="text" class="form-control" name="codProducto" id="codProducto" list="listaProductos">
+                            <input type="hidden" id="codProductoSin" name="codProductoSin">
                             <div class="input-group-append">
                                 <button class="btn btn-outline-secondary" type="button" onclick="busProducto()">
                                     <i class="fas fa-search"></i>
@@ -175,6 +176,7 @@
                         <label for="">U. Medida</label>
                         <div class="input-group form-group-">
                             <input type="text" class="form-control" name="uniMedida" id="uniMedida">
+                            <input type="hidden" id="uniMedidaSin" name="uniMedidaSin" >
                         </div>
                     </div>
                     <div class="form-group col-md-1">
@@ -198,13 +200,32 @@
                     <div class="form-group col-md-1">
                         <label for="">&nbsp;</label>
                         <div class="input-group form-group-">
-                            <button class="btn btn-info btn-circle form-control">
+                            <button class="btn btn-info btn-circle form-control" onclick="agregarCarrito()">
                                 <i class="fas fa-plus"></i>
                             </button>
                         </div>
                     </div>
 
                 </div>
+            </div>
+            <div class="car-footer">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Descripcion</th>
+                            <th>Cantidad</th>
+                            <th>P. Unitario</th>
+                            <th>Descuento</th>
+                            <th>P. Total</th>
+                            <td>&nbsp;</td>
+                        </tr>
+
+                    </thead>
+                    <tbody id="listaDetalle">
+
+                    </tbody>
+                </table>
+            
             </div>
 
         </div>
