@@ -40,11 +40,11 @@
                             <select name="tpDocumento" id="tpDocumento" class="form-control">
                                 <option value="1">Ninguno</option>
                                 <option value="1">Cedula de identidad</option>
-                                <option value="5">Nit</option>
+                                <option value="5">NIT</option>
                             </select>
                         </div>
                         <div class="form-group col-md-3">
-                            <label for="">NIT/</label>
+                            <label for="">NIT/CI</label>
                             <div class="input-group">
                                 <input type="text" class="form-control" list="listaClientes" name="nitCliente"
                                     id="nitCliente">
@@ -54,6 +54,18 @@
                                     </button>
                                 </div>
                             </div>
+                            <datalist id="listaClientes">
+                                <?php
+                                $cliente = ControladorCliente::ctrInfoClientes();
+                                foreach ($cliente as $value) {
+                                ?>
+                                    <option value="<?php echo $value["nit_ci_cliente"]; ?>">
+                                        <?php echo $value["razon_social_cliente"]; ?></option>
+                                <?php
+                                }
+
+                                ?>
+                            </datalist>
                         </div>
                         <div class="form-group col-md-6">
                             <label for="">Email</label>
@@ -97,11 +109,11 @@
                                 </div>
                             </div>
                             <!--Panel de avisos-->
-                                <div class="callout callout-info direct-chat-messanges" style="height:100px; width:290px ">
-                                    <span class="list-unstyled" id="panelInfo"></span>
-                                </div>
-                                
+                            <div class="callout callout-info direct-chat-messanges" style="height:100px; width:290px ">
+                                <span class="list-unstyled" id="panelInfo"></span>
                             </div>
+
+                        </div>
                     </div>
                 </div>
             </div>
@@ -156,19 +168,19 @@
                     <div class="form-group col-md-1">
                         <label for="">P. Unitario</label>
                         <div class="input-group form-group-">
-                            <input type="text" class="form-control" name="preUnitario" id="preUnitario" >
+                            <input type="text" class="form-control" name="preUnitario" id="preUnitario">
                         </div>
                     </div>
                     <div class="form-group col-md-1">
                         <label for="">Descuento</label>
                         <div class="input-group form-group-">
-                            <input type="text" class="form-control" name="descProducto" id="descProducto" >
+                            <input type="text" class="form-control" name="descProducto" id="descProducto">
                         </div>
                     </div>
                     <div class="form-group col-md-1">
                         <label for="">P. Total</label>
                         <div class="input-group form-group-">
-                            <input type="text" class="form-control" name="preTotal" id="preTotal" >
+                            <input type="text" class="form-control" name="preTotal" id="preTotal">
                         </div>
                     </div>
                     <div class="form-group col-md-1">
@@ -182,7 +194,7 @@
 
                 </div>
             </div>
-            
+
         </div>
     </div>
     <!-- /.content -->

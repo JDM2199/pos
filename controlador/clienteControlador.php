@@ -6,8 +6,7 @@ if (isset($ruta["query"])) {
     $ruta["query"] == "ctrRegCliente" ||
     $ruta["query"] == "ctrEditCliente" ||
     $ruta["query"] == "ctrBusCliente" ||
-    $ruta["query"] == "ctrEliCliente"
-  ) {
+    $ruta["query"] == "ctrEliCliente") {
     $metodo = $ruta["query"];
     $cliente = new ControladorCliente();
     $cliente->$metodo();
