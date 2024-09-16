@@ -30,6 +30,7 @@ session_start();
       if($_GET["ruta"]=="inicio"||
          $_GET["ruta"]=="salir"||
          $_GET["ruta"]=="SinCatalogos"||
+         $_GET["ruta"] == "FormVenta" ||
          $_GET["ruta"]=="VProducto"||
          $_GET["ruta"]=="VCliente"||
          $_GET["ruta"]=="VUsuario"){
