@@ -27,8 +27,7 @@ $producto = ControladorProducto::ctrInfoProducto($id);
             <div class="col-sm-6">
                 <div class="form-group">
                     <label for="">cod. Producto Sin</label>
-                    <input type="text" class="form-control" name="codProductoSIN" id="codProductoSIN"
-                        value="<?php echo $producto["cod_producto_sin"]; ?>">
+                    <input type="text" class="form-control" name="codProductoSIN" id="codProductoSIN" value="<?php echo $producto["cod_producto_sin"]; ?>">
                 </div>
             </div>
         </div>
@@ -36,15 +35,13 @@ $producto = ControladorProducto::ctrInfoProducto($id);
             <div class="col-sm-6">
                 <div class="form-group">
                     <label for="">Descripcion</label>
-                    <input type="text" class="form-control" name="desProducto" id="desProducto"
-                        value="<?php echo $producto["nombre_producto"]; ?>">
+                    <input type="text" class="form-control" name="desProducto" id="desProducto" value="<?php echo $producto["nombre_producto"]; ?>">
                 </div>
             </div>
             <div class="col-sm-6">
                 <div class="form-group">
                     <label for="">Precio</label>
-                    <input type="text" class="form-control" name="preProducto" id="preProducto"
-                        value="<?php echo $producto["precio_producto"]; ?>">
+                    <input type="text" class="form-control" name="preProducto" id="preProducto" value="<?php echo $producto["precio_producto"]; ?>">
                 </div>
             </div>
         </div>
@@ -52,15 +49,13 @@ $producto = ControladorProducto::ctrInfoProducto($id);
             <div class="col-sm-6">
                 <div class="form-group">
                     <label for="">unidad de medida</label>
-                    <input type="text" class="form-control" name="unidadMedidad" id="unidadMedidad"
-                        value="<?php echo $producto["unidad_medida"]; ?>">
+                    <input type="text" class="form-control" name="unidadMedidad" id="unidadMedidad" value="<?php echo $producto["unidad_medida"]; ?>">
                 </div>
             </div>
             <div class="col-sm-6">
                 <div class="form-group">
                     <label for="">unidad de medida Sin</label>
-                    <input type="text" class="form-control" name="unidadMedidadSIN" id="unidadMedidadSIN"
-                        value="<?php echo $producto["unidad_medida_sin"]; ?>">
+                    <input type="text" class="form-control" name="unidadMedidadSIN" id="unidadMedidadSIN" value="<?php echo $producto["unidad_medida_sin"]; ?>">
                 </div>
             </div>
         </div>
@@ -70,8 +65,7 @@ $producto = ControladorProducto::ctrInfoProducto($id);
                     <label>Imagen <span class="text-muted">(Peso maximo 10mb- JPG, PNG)</span></label>
                     <div class="input-group">
                         <div class="custom-file">
-                            <input type="file" class="custom-file-input" id="imgProducto" name="imgProducto"
-                                onchange="previsualizar()">
+                            <input type="file" class="custom-file-input" id="imgProducto" name="imgProducto" onchange="previsualizar()">
                             <input type="hidden" name="imgActual" value="<?php echo $producto["imagen_producto"]; ?>">
                             <label class="custom-file-label" for="imgProducto">Elegir archivo</label>
                         </div>
@@ -105,13 +99,11 @@ $producto = ControladorProducto::ctrInfoProducto($id);
                     <?php
                     if ($producto["imagen_producto"] == "") {
                         ?>
-                        <img src="assest/dist/img/product_default.png" alt="" width="150"
-                            class="img-thumbnail previsualizar">
+                        <img src="assest/dist/img/product_default.png" alt="" width="150" class="img-thumbnail previsualizar">
                         <?php
                     } else {
                         ?>
-                        <img src="assest/dist/img/productos/<?php echo $producto["imagen_producto"]; ?>" alt="" width="150"
-                            class="img-thumbnail previsualizar">
+                        <img src="assest/dist/img/productos/<?php echo $producto["imagen_producto"]; ?>" alt="" width="150" class="img-thumbnail previsualizar">
                         <?php
                     }
                     ?>

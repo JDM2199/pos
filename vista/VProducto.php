@@ -14,53 +14,64 @@
     <div class="container-fluid">
       <div class="card">
         <div class="card-header">
-          <h3 class="card-title">Lista de Productos</h3>
+          <h3 class="card-title">Lista de Productos Registrados</h3>
         </div>
         <!-- /.card-header -->
         <div class="card-body">
           <table id="example1" class="table table-bordered table-striped">
             <thead>
               <tr>
-                <th>#</th>
-                <th>Login</th>
-                <th>Perfil</th>
-                <th>Estado</th>
-                <th>Ultimo acceso</th>
-                <th>Fecha de registro</th>
+                <th>cod_producto</th>
+                <th>Descripcion</th>
+                <th>precio</th>
+                <th>imagen</th>
+                <th>estado</th>
                 <td>
-                  <button class="btn btn-primary" onclick="MNuevoProductos()">Nuevo</button>
+                  <button class="btn btn-primary" onclick="MNuevoProducto()">Nuevo</button>
                 </td>
               </tr>
             </thead>
             <tbody>
-              <?php
-              $cliente=ControladorCliente::ctrInfoClientes();
-              foreach($cliente as $value){
+            <?php
+              $producto=ControladorProducto::ctrInfoProductos();
+              foreach($producto as $value){
               ?>
 
               <tr>
-                <td><?php echo $value["id_cliente"];?></td>
-                <td><?php echo $value["login_cliente"];?></td>
-                <td><?php echo $value["perfil"];?></td>
+                <td><?php echo $value["cod_producto"];?></td>
+                <td><?php echo $value["nombre_producto"];?></td>
+                <td><?php echo $value["precio_producto"];?></td>
                 <td><?php 
-                if($value["estado"]==1){
+                if($value["imagen_producto"]==""){
+                    ?>
+                      <img src="assest/dist/img/product_default.png" alt="" width="50" class="img-thumbnail">
+                    <?php
+                }else{
                   ?>
-                  <span class="badge badge-success">Activo</span>
+                  <img src="assest/dist/img/productos/<?php  echo $value["imagen_producto"];?>" alt="" width="50" class="img-thumbnail">
+                  <?php
+                }
+               ?></td>
+                <td> <?php
+                if ($value["disponible"]==1) {
+                  ?>
+                  <span class="badge badge-success" >Disponible</span>
                   <?php
                 }else{
                   ?>
-                  <span class="badge badge-danger">Inactivo</span>
+                  <span class="badge badge-danger" >No disponible</span>
                   <?php
                 }
-                  ?></td>
-                <td><?php echo $value["ultimo_login"];?></td>
-                <td><?php echo $value["fecha_registro"];?></td>
+                ?></td>
                 <td>
                   <div class="btn-group">
-                    <button class="btn btn-secondary" onclick="MEditCliente(<?php echo $value["id_cliente"];?>)">
+                  <button class="btn btn-info" onclick="MEVerProducto(<?php echo $value["id_producto"];?>)">
+                      <i class="fas fa-eye"></i>
+                    </button>
+                    <button class="btn btn-secondary" onclick="MEditProducto(<?php echo $value["id_producto"];?>)">
                       <i class="fas fa-edit"></i>
                     </button>
-                    <button class="btn btn-danger" onclick="MEliCliente(<?php echo $value["id_cliente"];?>)">
+                    <button class="btn btn-danger" onclick="MEliProducto(<?php echo $value["id_producto"];?>)">
                       <i class="fas fa-trash"></i>
                     </button>
                   </div>
