@@ -163,7 +163,7 @@ function dibujarTablaCarrito() {
     let botonEliminar = document.createElement("button")
     botonEliminar.classList.add("btn", "btn-danger")
     botonEliminar.innerText = "Eliminar"
-    botonEliminar.onclick=()=>{
+    botonEliminar.onclick = () => {
       eliminarCarrito(detalle.codigoProducto)
     }
     tdEliminar.appendChild(botonEliminar)
@@ -198,62 +198,172 @@ function calcularTotal() {
   document.getElementById("totApagar").value = totalCarrito - descAdicional
 }
 
-/*=======
-Emitir factura
-=======*/
-function emitirFactura() {
-
-    let date = new Date()
-
-    let numFactura = parseInt(document.getElementById("numFactura").value)
-    let fechaFactura = date.toISOString()
-    let rsCliente = document.getElementById("rsCliente").value
-    let tpDocumento = parseInt(document.getElementById("tpDocumento").value)
-    let nitCliente = document.getElementById("nitCliente").value
-    let metPago = parseInt(document.getElementById("metPago").value)
-    let totApagar = parseFloat(document.getElementById("totApagar").value)
-    let descAdicional = parseFloat(document.getElementById("descAdicional").value)
-    let subTotal = parseFloat(document.getElementById("subTotal").value)
-    let usuarioLogin = document.getElementById("usuarioLogin").innerHTML
-
-    let actEconomica = document.getElementById("actEconomica").value
-    let emailCliente = document.getElementById("emailCliente").value
-
+/*=========
+OBTENER EL CUFD
+========= */
+function solicitudCufd() {
 
     var obj = {
       codigoAmbiente: 2,
-      codigoDocumentoSector: 1,
-      codigoEmision: 1,
       codigoModalidad: 2,
       codigoPuntoVenta: 0,
       codigoPuntoVentaSpecified: true,
       codigoSistema: codSistema,
       codigoSucursal: 0,
-      cufd:"",
-      cuis: cuis,
       nit: nitEmpresa,
-      tipoFacturaDocumento: 1,
-      archivo: null,
-      fechaEnvio:fechaFactura,
-      hashArchivo: "",
-      codigoControl: "",
-      factura:{
-        cabecera:{
-          nitEmisor: nitEmpresa,
-          razonSocialEmisor: rsEmpresa,
-          municipio: "Santa Cruz",
-          telefono: telEmpresa,
-          numeroFactura: numFactura,
-          cuf: "String",
-          cufd:"",
-          codigoSucursal: 0,
-          direccion: dirEmpresa,
-          codigoPuntoVenta: 0,
-          fechaEmision: fechaFactura,
-          nombreRazonSocial: rsCliente,
-        },
-        detalle:{}
+      cuis: cuis,
+    }
+    $.ajax({
+      type: "POST",
+      url: host + "api/Codigos/solicitudCufd?token=" + token,
+      data: JSON.stringify(obj),
+      cache: false,
+      contentType: "application/json",
+      success: function (data) {
+        cufd = data["codigo"]
+        codControlCufd = data["codigoControl"]
+        fechaVigCufd = data["fechaVigencia"]
+
+      }
+    })
+
+}
+
+
+/*===============
+registrar el cufd
+================= */
+function registrarNuevoCufd() {
+
+      var obj = {
+        "cufd": cufd,
+        "fechaVigCufd": fechaVigCufd,
+        "codControlCufd": codControlCufd
+      }
+
+      $.ajax({
+        type: "POST",
+        data: obj,
+        url: "controlador/facturaControlador.php?ctrNuevoCufd",
+        cache: false,
+        success: function (data) {
+          console.log(data)
+
+        }
+
+      })
+
+    }
+
+
+
+function verificarVigenciaCufd() {
+  //fecha actual
+  let date = new Date()
+
+  //ultimo registro del cufd
+
+  var obj = ""
+  $.ajax({
+    type: "POST",
+    url: "controlador/facturaControlador.php?ctrUltimoCufd",
+    data: obj,
+    cache: false,
+    dataType: "json",
+    success: function (data) {
+      //fecha del ultimo cufd de mi DB
+      let vigCufdActual = new Date(data["fecha_vigencia"])
+      if (date.getTime() > vigCufdActual.getTime()) {
+        $("#panelInfo").before("<span class='text-warning'>Cufd caducado!!!</span><br>")
+        $("#panelInfo").before("<span>Registrando Cufd...</span><br>")
+        registrarNuevoCufd()
+
+      } else {
+        $("#panelInfo").before("<span class='text-success'>Cufd vigente, se puede facturar!!!!</span><br>")
+
+       /*  cufd = data["codigo_cufd"]
+        codControlCufd = data["codigo_control"]
+        fechaVigCufd = data["fecha_vigencia"] */
+
       }
 
     }
+  });
+}
+/*=======
+Emitir factura
+=======*/
+function emitirFactura() {
+
+  let date = new Date()
+
+  let numFactura = parseInt(document.getElementById("numFactura").value)
+  let fechaFactura = date.toISOString()
+  let rsCliente = document.getElementById("rsCliente").value
+  let tpDocumento = parseInt(document.getElementById("tpDocumento").value)
+  let nitCliente = document.getElementById("nitCliente").value
+  let metPago = parseInt(document.getElementById("metPago").value)
+  let totApagar = parseFloat(document.getElementById("totApagar").value)
+  let descAdicional = parseFloat(document.getElementById("descAdicional").value)
+  let subTotal = parseFloat(document.getElementById("subTotal").value)
+  let usuarioLogin = document.getElementById("usuarioLogin").innerHTML
+
+  let actEconomica = document.getElementById("actEconomica").value
+  let emailCliente = document.getElementById("emailCliente").value
+
+
+  var obj = {
+    codigoAmbiente: 2,
+    codigoDocumentoSector: 1,
+    codigoEmision: 1,
+    codigoModalidad: 2,
+    codigoPuntoVenta: 0,
+    codigoPuntoVentaSpecified: true,
+    codigoSistema: codSistema,
+    codigoSucursal: 0,
+    cufd: "",
+    cuis: cuis,
+    nit: nitEmpresa,
+    tipoFacturaDocumento: 1,
+    archivo: null,
+    fechaEnvio: fechaFactura,
+    hashArchivo: "",
+    codigoControl: "",
+    factura: {
+      cabecera: {
+        nitEmisor: nitEmpresa,
+        razonSocialEmisor: rsEmpresa,
+        municipio: "Santa Cruz",
+        telefono: telEmpresa,
+        numeroFactura: numFactura,
+        cuf: "String",
+        cufd: "",
+        codigoSucursal: 0,
+        direccion: dirEmpresa,
+        codigoPuntoVenta: 0,
+        fechaEmision: fechaFactura,
+        nombreRazonSocial: rsCliente,
+        codigoTipoDocumentoIdentidad: tpDocumento,
+        numeroDocumento: nitCliente,
+        complemento: "",
+        codigoCliente: nitCliente,
+        codigoMetodoPago: metPago,
+        numeroTarjeta: null,
+        montoTotal: subTotal,
+        montoTotalSujetoIva: totApagar,
+        codigoMoneda: 1,
+        tipoCambio: 1,
+        montoTotalMoneda: totApagar,
+        montoGiftCard: 0,
+        descuentoAdicional: descAdicional,
+        codigoExcepcion: "0",
+        cafc: null,
+        leyenda:"",
+        usuario: usuarioLogin,
+        codigoDocumentoSector: 1
+      },
+      detalle: arregloCarrito
+    }
+
+  }
 } 
