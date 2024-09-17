@@ -208,7 +208,7 @@
 
                 </div>
             </div>
-            <div class="car-footer">
+            <div class="card-footer">
                 <table class="table">
                     <thead>
                         <tr>
