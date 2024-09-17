@@ -8,6 +8,11 @@ var rsEmpresa = "NEOMAC SRL"
 var telEmpresa = "9422560"
 var dirEmpresa = "Calle Pucara 129 AVENIDA 7TO ANILLO. 7550 ZONA/BARRIO: TIERRAS NUEVAS UV:0135 MZA:007"
 
+var cufd;
+var codControlCufd;
+var fechaVigCufd;
+var leyenda;
+
 function verificarComunicacion() {
   var obj = ""
   $.ajax({
@@ -202,6 +207,7 @@ function calcularTotal() {
 OBTENER EL CUFD
 ========= */
 function solicitudCufd() {
+  return new Promise((resolve, reject) => {
 
     var obj = {
       codigoAmbiente: 2,
@@ -224,8 +230,11 @@ function solicitudCufd() {
         codControlCufd = data["codigoControl"]
         fechaVigCufd = data["fechaVigencia"]
 
+        resolve(cufd)
       }
     })
+
+  })
 
 }
 
@@ -234,6 +243,9 @@ function solicitudCufd() {
 registrar el cufd
 ================= */
 function registrarNuevoCufd() {
+  solicitudCufd().then(ok => {
+
+    if (ok != "" || ok != null) {
 
       var obj = {
         "cufd": cufd,
@@ -247,7 +259,14 @@ function registrarNuevoCufd() {
         url: "controlador/facturaControlador.php?ctrNuevoCufd",
         cache: false,
         success: function (data) {
-          console.log(data)
+          if (data == "ok") {
+            $("#panelInfo").before("<span class='text-primary'>Cufd Regsitrado!!!!</span><br>")
+          } else {
+            $("#panelInfo").before("<span class='text-danger'>Error de Registro Cufd!!!!</span><br>")
+          }
+        }
+
+        })
 
         }
 
@@ -281,15 +300,36 @@ function verificarVigenciaCufd() {
       } else {
         $("#panelInfo").before("<span class='text-success'>Cufd vigente, se puede facturar!!!!</span><br>")
 
-       /*  cufd = data["codigo_cufd"]
+        cufd = data["codigo_cufd"]
         codControlCufd = data["codigo_control"]
-        fechaVigCufd = data["fecha_vigencia"] */
+        fechaVigCufd = data["fecha_vigencia"]
 
       }
 
     }
   });
 }
+
+/*===============
+verificar u obtener leyenda
+================= */
+function extraerLeyenda() {
+  var obj = ""
+
+  $.ajax({
+    type: "POST",
+    url: "controlador/facturaControlador.php?ctrLeyenda",
+    data: obj,
+    cache: false,
+    dataType: "json",
+    success: function (data) {
+      leyenda = data["desc_leyenda"]
+
+    }
+  })
+}
+
+
 /*=======
 Emitir factura
 =======*/
@@ -321,14 +361,14 @@ function emitirFactura() {
     codigoPuntoVentaSpecified: true,
     codigoSistema: codSistema,
     codigoSucursal: 0,
-    cufd: "",
+    cufd: cufd,
     cuis: cuis,
     nit: nitEmpresa,
     tipoFacturaDocumento: 1,
     archivo: null,
     fechaEnvio: fechaFactura,
     hashArchivo: "",
-    codigoControl: "",
+    codigoControl: codControlCufd,
     factura: {
       cabecera: {
         nitEmisor: nitEmpresa,
@@ -337,7 +377,7 @@ function emitirFactura() {
         telefono: telEmpresa,
         numeroFactura: numFactura,
         cuf: "String",
-        cufd: "",
+        cufd: cufd,
         codigoSucursal: 0,
         direccion: dirEmpresa,
         codigoPuntoVenta: 0,
@@ -358,7 +398,7 @@ function emitirFactura() {
         descuentoAdicional: descAdicional,
         codigoExcepcion: "0",
         cafc: null,
-        leyenda:"",
+        leyenda:leyenda,
         usuario: usuarioLogin,
         codigoDocumentoSector: 1
       },
